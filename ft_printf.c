@@ -6,7 +6,7 @@
 /*   By: majnaou <majnaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 07:21:05 by majnaou           #+#    #+#             */
-/*   Updated: 2026/11/08 12:16:01 by majnaou          ###   ########.fr       */
+/*   Updated: 2026/11/10 07:15:56 by majnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,23 @@
 int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
-	int	count;
-	int	check;
-	int i;
+	int		count;
+	int		check;
 
 	if (!format)
 		return (-1);
-	 i = 0;
-	va_start(ap, format);
 	count = 0;
-	while (format[i])
+	va_start(ap, format);
+	while (*format)
 	{
-		if (format[i] == '%')
-		{
-			check = print_format(format[i + 1], ap);
-			if (check == -1)
-				return (-1);
-			count = check + count;
-			i +=2;
-		}
+		if (*format == '%')
+			check = print_format(*(++format), ap);
 		else
-			count += write(1, &format[i++], 1);
+			check = print_char(*format);
+		if (check == -1)
+			return (va_end(ap), -1);
+		count += check;
+		format++;
 	}
-		va_end(ap);
-		return (count);
+	return (va_end(ap), count);
 }

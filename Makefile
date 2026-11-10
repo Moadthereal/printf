@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 FLAGS = -Wall -Wextra -Werror
 CC = cc
-SRC =  ft_printf.c helper_funcions.c print_u.c
+SRC =  ft_printf.c helper_functions.c print_format.c
 OBGS = $(SRC:.c=.o)
 
 
@@ -10,7 +10,7 @@ all : $(NAME)
 $(NAME) : $(OBGS)
 	ar rcs $(NAME) $(OBGS) 
 
-%.o: %.c 
+%.o: %.c  libftprintf
 	$(CC) $(FLAGS) -c $< -o $@
 
 
