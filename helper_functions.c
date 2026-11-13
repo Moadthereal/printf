@@ -6,11 +6,16 @@
 /*   By: majnaou <majnaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 07:30:00 by majnaou           #+#    #+#             */
-/*   Updated: 2026/11/10 07:41:52 by majnaou          ###   ########.fr       */
+/*   Updated: 2026/11/13 07:11:05 by majnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	print_char(int c)
+{
+	return (write(1, &c, 1));
+}
 
 int	print_str(char *s)
 {
@@ -63,7 +68,7 @@ int	print_digit(long digit, int base, char *b)
 	}
 }
 
-int	print_void(void *n, int base, char *b)
+int	print_void(void *n, unsigned long base, char *b)
 {
 	unsigned long	digit;
 	int				count;
@@ -72,7 +77,7 @@ int	print_void(void *n, int base, char *b)
 	if (!n)
 		return (write(1, "(nil)", 5));
 	digit = (unsigned long)n;
-	if (digit < (unsigned long)base)
+	if (digit < base)
 	{
 		if (write(1, "0x", 2) == -1)
 			return (-1);
@@ -82,7 +87,7 @@ int	print_void(void *n, int base, char *b)
 	}
 	else
 	{
-		count = print_void((void *)(digit / (unsigned long)base), base, b);
+		count = print_void((void *)(digit / base), base, b);
 		if (count == -1)
 			return (-1);
 		check = print_char(b[digit % base]);
@@ -92,16 +97,16 @@ int	print_void(void *n, int base, char *b)
 	}
 }
 
-int	print_u(unsigned int digit, int base, char *b)
+int	print_unsigned(unsigned int digit, unsigned int base, char *b)
 {
 	int	count;
 	int	check;
 
-	if (digit < (unsigned int)base)
+	if (digit < base)
 		return (print_char(b[digit]));
 	else
 	{
-		count = print_u(digit / base, base, b);
+		count = print_unsigned(digit / base, base, b);
 		if (count == -1)
 			return (-1);
 		check = print_char(b[digit % base]);
@@ -109,9 +114,4 @@ int	print_u(unsigned int digit, int base, char *b)
 			return (-1);
 		return (count + check);
 	}
-}
-
-int	print_char(int c)
-{
-	return (write(1, &c, 1));
 }

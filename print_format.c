@@ -6,7 +6,7 @@
 /*   By: majnaou <majnaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 08:59:33 by majnaou           #+#    #+#             */
-/*   Updated: 2026/11/10 09:00:19 by majnaou          ###   ########.fr       */
+/*   Updated: 2026/11/12 16:02:42 by majnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	print_format(char format, va_list ap)
 	else if (format == 'X')
 		return (print_digit(va_arg(ap, unsigned int), 16, HEXA_UPEER));
 	else if (format == 'u')
-		return (print_u(va_arg(ap, unsigned int), 10, DECIMAL_BASE));
+		return (print_unsigned(va_arg(ap, unsigned int), 10, DECIMAL_BASE));
 	else if (format == 'p')
 		return (print_void(va_arg(ap, void *), 16, HEXA_LOWER));
 	else if (format == '%')
@@ -34,7 +34,8 @@ int	print_format(char format, va_list ap)
 		return (-1);
 	else
 	{
-		write(1, "%", 1);
+		if (write(1, "%", 1) == -1)
+			return (-1);
 		return (print_char(format) + 1);
 	}
 }
