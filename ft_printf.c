@@ -6,7 +6,7 @@
 /*   By: majnaou <majnaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 07:21:05 by majnaou           #+#    #+#             */
-/*   Updated: 2026/11/10 07:15:56 by majnaou          ###   ########.fr       */
+/*   Updated: 2026/11/13 17:25:12 by majnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ int	ft_printf(const char *format, ...)
 		else
 			check = print_char(*format);
 		if (check == -1)
-			return (va_end(ap), -1);
+		{
+			va_end(ap);
+			return (-1);
+		}
 		count += check;
 		format++;
 	}
-	return (va_end(ap), count);
+	va_end(ap);
+	return (count);
 }

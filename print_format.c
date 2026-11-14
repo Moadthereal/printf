@@ -6,7 +6,7 @@
 /*   By: majnaou <majnaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 08:59:33 by majnaou           #+#    #+#             */
-/*   Updated: 2026/11/12 16:02:42 by majnaou          ###   ########.fr       */
+/*   Updated: 2026/11/13 10:30:59 by majnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	print_format(char format, va_list ap)
 		return (-1);
 	else
 	{
-		if (write(1, "%", 1) == -1)
+		if (write(1, "%", 1) == -1 || print_char(format) == -1)
 			return (-1);
-		return (print_char(format) + 1);
+		return (2);
 	}
 }

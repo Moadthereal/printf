@@ -6,13 +6,13 @@
 /*   By: majnaou <majnaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 07:30:00 by majnaou           #+#    #+#             */
-/*   Updated: 2026/11/13 07:11:05 by majnaou          ###   ########.fr       */
+/*   Updated: 2026/11/13 16:53:10 by majnaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	print_char(int c)
+int	print_char(char c)
 {
 	return (write(1, &c, 1));
 }
@@ -23,17 +23,12 @@ int	print_str(char *s)
 	int	check;
 
 	if (!s)
-	{
-		check = write(1, "(null)", 6);
-		if (check == -1)
-			return (-1);
-		return (check);
-	}
+		return (print_null("(null)"));
 	count = 0;
 	while (s[count])
 	{
 		check = write(1, &s[count], 1);
-		if (check == -1)
+		if (check != 1)
 			return (-1);
 		count++;
 	}
@@ -47,7 +42,7 @@ int	print_digit(long digit, int base, char *b)
 
 	if (digit < 0)
 	{
-		if (write(1, "-", 1) < 0)
+		if (write(1, "-", 1) != 1)
 			return (-1);
 		check = print_digit(-digit, base, b);
 		if (check == -1)
@@ -62,7 +57,7 @@ int	print_digit(long digit, int base, char *b)
 		if (count == -1)
 			return (-1);
 		check = print_char(b[digit % base]);
-		if (check == -1)
+		if (check != 1)
 			return (-1);
 		return (count + check);
 	}
@@ -75,13 +70,13 @@ int	print_void(void *n, unsigned long base, char *b)
 	int				check;
 
 	if (!n)
-		return (write(1, "(nil)", 5));
+		return (print_null("(nil)"));
 	digit = (unsigned long)n;
 	if (digit < base)
 	{
-		if (write(1, "0x", 2) == -1)
+		if (print_null("0x") == -1)
 			return (-1);
-		if (print_char(b[digit]) == -1)
+		if (print_char(b[digit]) != 1)
 			return (-1);
 		return (3);
 	}
@@ -91,7 +86,7 @@ int	print_void(void *n, unsigned long base, char *b)
 		if (count == -1)
 			return (-1);
 		check = print_char(b[digit % base]);
-		if (check == -1)
+		if (check != 1)
 			return (-1);
 		return (count + check);
 	}
@@ -110,7 +105,7 @@ int	print_unsigned(unsigned int digit, unsigned int base, char *b)
 		if (count == -1)
 			return (-1);
 		check = print_char(b[digit % base]);
-		if (check == -1)
+		if (check != 1)
 			return (-1);
 		return (count + check);
 	}
