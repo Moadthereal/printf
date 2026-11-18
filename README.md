@@ -36,7 +36,7 @@ To access these additional arguments, C provides the <stdarg.h> library, which c
 
 To test this project use :
 ``` bash
-- git clone   git@vogsphere-v2.1337.ma:vogsphere/intra-uuid-89adc21b-a23a-4b59-b1f7-59cdf6829ed1-7790408-majnaou ft_pritf
+- git clone    https://github.com/Moadthereal/printf.git ft_pritf
 - cd ft_printf
 - make 
 - cc -Wall -Wextra -Werror  main.c libft_printf.a -o test 
